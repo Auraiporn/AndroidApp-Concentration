@@ -1,23 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fece2f"
     tools:context=".MainActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="250dp"
+        android:src="@drawable/penguin_giphy" />
+
     <Button
-        android:id="@+id/btnEndGame"
+        android:id="@+id/btnStartGame"
         android:layout_width="164dp"
         android:layout_height="78dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="176dp"
-        android:text="PLAY GAME"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="160dp"
+        android:text="Play"
         tools:layout_editor_absoluteX="271dp"
         tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnHighScore"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="160dp"
+        android:text="High Score"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnMusic"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="220dp"
+        android:layout_marginBottom="50dp"
+        android:text="Music"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnCredit"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="50dp"
+        android:text="Credits"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
 </RelativeLayout>
