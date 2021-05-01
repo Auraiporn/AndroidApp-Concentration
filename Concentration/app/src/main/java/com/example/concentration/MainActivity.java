@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
    //Variables
     Animation topAnim, bottomAnim;
-    Button btnStartGame, btnHighScore, btnMusic, btnCredit;
+    Button btnStartGame, btnHighScore, btnCredit;
     pl.droidsonroids.gif.GifImageView gif;
 
     static final String[] words = {"PANDA", "TIGER","FISH", "BIRD", "BUTTERFLY", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity {
         //Hooks
         Button btnPlay = (Button)findViewById(R.id.btnStartGame);
         Button btnScore = (Button)findViewById(R.id.btnHighScore);
-        Button btnSound = (Button)findViewById(R.id.btnMusic);
         Button btnCredit = (Button)findViewById(R.id.btnCredit);
         pl.droidsonroids.gif.GifImageView Giphy = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.gif);
 
         btnPlay.setAnimation(bottomAnim);
         btnScore.setAnimation(bottomAnim);
-        btnSound.setAnimation(bottomAnim);
         btnCredit.setAnimation(bottomAnim);
         Giphy.setAnimation(topAnim);
 
