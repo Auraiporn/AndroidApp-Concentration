@@ -6,12 +6,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class GameScreenActivity extends AppCompatActivity {
 
     //Variables
     private Button btnEnd, btnSoundOn, btnSoundOff;
+    private ImageButton btnCard;
     private MediaPlayer player;
 
 
@@ -21,9 +23,23 @@ public class GameScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_screen);
 
         // Initialized buttons
-        Button btnEnd = (Button) findViewById(R.id.btnEnd);
-        Button btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
-        Button btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
+        btnEnd = (Button) findViewById(R.id.btnEnd);
+        btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
+        btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
+        btnCard = findViewById(R.id.btnWord);
+
+        btnCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(btnCard.getAlpha()==(float)0.1) {
+                    btnCard.setAlpha((float)1);
+                }
+                else{
+                    btnCard.setAlpha((float)0.1);
+                }
+
+            }
+        });
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
