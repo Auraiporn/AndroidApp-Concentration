@@ -14,14 +14,11 @@ import android.widget.Toast;
 public class GameScreenActivity extends AppCompatActivity {
 
     //Variables
-    private Button btnEnd, btnSoundOn, btnSoundOff;
-//    private ImageButton btnCard;
-    private ImageView btnCard;
-
+    private Button btnEnd, btnSoundOn, btnSoundOff,btnTestCard;
     private MediaPlayer player;
 
     private void showToast(String msg){
-        Toast.makeText( GameScreenActivity.this,"The day of the week is " + msg,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +29,20 @@ public class GameScreenActivity extends AppCompatActivity {
         btnEnd = (Button) findViewById(R.id.btnEnd);
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
-        btnCard = findViewById(R.id.btnWord);
+        btnTestCard = findViewById(R.id.BtnTestCard);
 
-        RelativeLayout relativeLayout = findViewById(R.id.imgBtn);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        btnTestCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("I am an Image Button");
-            }
-        });
-
-
-        btnCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnCard.getAlpha()==(float)0.1) {
-                    btnCard.setAlpha((float)1);
+                String see = btnTestCard.getText().toString();
+                if(btnTestCard.getText().toString().equals("")){
+                    btnTestCard.setBackgroundResource(R.drawable.white);
+                    btnTestCard.setText("Hello");
                 }
                 else{
-                    btnCard.setAlpha((float)0.1);
+                    btnTestCard.setBackgroundResource(R.drawable.blue);
+                    btnTestCard.setText("");
                 }
-
             }
         });
 
