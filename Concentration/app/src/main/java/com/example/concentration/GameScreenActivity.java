@@ -7,16 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class GameScreenActivity extends AppCompatActivity {
 
     //Variables
     private Button btnEnd, btnSoundOn, btnSoundOff;
-    private ImageButton btnCard;
+//    private ImageButton btnCard;
+    private ImageView btnCard;
+
     private MediaPlayer player;
 
-
+    private void showToast(String msg){
+        Toast.makeText( GameScreenActivity.this,"The day of the week is " + msg,Toast.LENGTH_LONG).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +33,15 @@ public class GameScreenActivity extends AppCompatActivity {
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
         btnCard = findViewById(R.id.btnWord);
+
+        RelativeLayout relativeLayout = findViewById(R.id.imgBtn);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("I am an Image Button");
+            }
+        });
+
 
         btnCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +55,7 @@ public class GameScreenActivity extends AppCompatActivity {
 
             }
         });
+
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
