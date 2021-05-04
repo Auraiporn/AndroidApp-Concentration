@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fece2f"
+    tools:context=".MainActivity">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="253dp"
+        android:src="@drawable/penguin_giphy" />
+
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="183dp"
+        android:text="Play"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnHighScore"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="94dp"
+        android:text="High Score"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnCredit"
+        android:layout_width="164dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="7dp"
+        android:text="Credits"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+
+</RelativeLayout>

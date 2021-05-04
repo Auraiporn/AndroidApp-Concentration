@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fece2f"
+    tools:context=".GameScreenActivity">
+
+    <Button
+        android:id="@+id/btnEnd"
+        android:layout_width="150dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="250dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
+        android:text="End"
+        tools:layout_editor_absoluteX="271dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnSoundOn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="620dp"
+        android:foreground="@android:drawable/ic_lock_silent_mode_off"
+        android:text=""
+        tools:layout_editor_absoluteX="275dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/btnSoundOff"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="580dp"
+        android:foreground="@android:drawable/ic_lock_silent_mode"
+        android:text=""
+        tools:layout_editor_absoluteX="275dp"
+        tools:layout_editor_absoluteY="582dp" />
+
+    <Button
+        android:id="@+id/BtnTestCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue"
+        android:text=""
+        android:textColor="@color/black"
+        app:backgroundTint="@null"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
