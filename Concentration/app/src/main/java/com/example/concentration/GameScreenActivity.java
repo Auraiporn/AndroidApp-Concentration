@@ -5,21 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 public class GameScreenActivity extends AppCompatActivity {
 
     //Variables
-    private Button btnEnd, btnSoundOn, btnSoundOff,btnTestCard;
+    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "BUTTERFLY", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
+
+    private Button btnEnd, btnSoundOn, btnSoundOff;
     private MediaPlayer player;
 
     private void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,22 +36,8 @@ public class GameScreenActivity extends AppCompatActivity {
         btnEnd = (Button) findViewById(R.id.btnEnd);
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
-        btnTestCard = findViewById(R.id.BtnTestCard);
 
-        btnTestCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String see = btnTestCard.getText().toString();
-                if(btnTestCard.getText().toString().equals("")){
-                    btnTestCard.setBackgroundResource(R.drawable.white);
-                    btnTestCard.setText("Hello");
-                }
-                else{
-                    btnTestCard.setBackgroundResource(R.drawable.blue);
-                    btnTestCard.setText("");
-                }
-            }
-        });
+        //Test Ground for card field
 
 
         // Action listener to start music
@@ -96,4 +89,16 @@ public class GameScreenActivity extends AppCompatActivity {
         super.onStop();
         releaseMediaPlayer();
     }
+
+//    @Override
+//    public void onClick(View v) {
+//        if(btnTestCard.getText().toString().equals("")){
+//            btnTestCard.setBackgroundResource(R.drawable.white);
+//            btnTestCard.setText("Hello");
+//        }
+//        else{
+//            btnTestCard.setBackgroundResource(R.drawable.blue);
+//            btnTestCard.setText("");
+//        }
+//    }
 }

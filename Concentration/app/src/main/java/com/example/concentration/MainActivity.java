@@ -15,8 +15,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnStartGame, btnHighScore, btnCredit;
     pl.droidsonroids.gif.GifImageView gif;
 
-    static final String[] words = {"PANDA", "TIGER","FISH", "BIRD", "BUTTERFLY", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
