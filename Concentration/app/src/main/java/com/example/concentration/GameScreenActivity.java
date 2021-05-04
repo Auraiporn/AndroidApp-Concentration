@@ -2,6 +2,7 @@ package com.example.concentration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -15,16 +16,24 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
-public class GameScreenActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
     String[] words = {"PANDA", "TIGER","FISH", "BIRD", "BUTTERFLY", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
+    private ArrayList<Card> card_list;
 
     private Button btnEnd, btnSoundOn, btnSoundOff;
     private MediaPlayer player;
+    private GridLayout field;
 
     private void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+    }
+    public static int dpToPx(int dp, Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 
     @Override
@@ -36,9 +45,18 @@ public class GameScreenActivity extends AppCompatActivity {
         btnEnd = (Button) findViewById(R.id.btnEnd);
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
+        card_list = new ArrayList<Card>();
 
         //Test Ground for card field
-
+        field = findViewById(R.id.cardField);
+        field.setColumnCount(4);
+        field.setRowCount(5);
+        for(int i = 0; i < 20; i++){
+            Card temp  = new Card(this);
+            temp.setOnClickListener(this);
+            card_list.add(temp);
+            field.addView(temp);
+        }
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
@@ -90,15 +108,9 @@ public class GameScreenActivity extends AppCompatActivity {
         releaseMediaPlayer();
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        if(btnTestCard.getText().toString().equals("")){
-//            btnTestCard.setBackgroundResource(R.drawable.white);
-//            btnTestCard.setText("Hello");
-//        }
-//        else{
-//            btnTestCard.setBackgroundResource(R.drawable.blue);
-//            btnTestCard.setText("");
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        Card c = (Card) v;
+        showToast(c.test());
+    }
 }
