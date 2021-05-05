@@ -17,11 +17,19 @@
 
     </GridLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtScore"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="200dp"
+        android:text="Score: "/>
+
     <Button
         android:id="@+id/btnEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="650dp"
+        android:layout_marginTop="550dp"
         android:layout_marginLeft="250dp"
         android:text="End" />
 

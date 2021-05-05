@@ -16,6 +16,24 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
     }
+    public void freeze(){
+        this.setAlpha((float) 0.5);
+        this.setEnabled(false);
+    }
+    public void reset(){
+        this.setAlpha(1);
+        this.background = R.drawable.blue;
+        this.setBackgroundResource(background);
+        this.setText("");
+        this.setEnabled(true);
+    }
+    public String limitFlip(){
+        this.background = R.drawable.white;
+        this.setBackgroundResource(background);
+        this.setText(assignedWord);
+        this.setEnabled(false);
+        return assignedWord;
+    }
     public String flip(){
         if(background==R.drawable.blue){
             this.background = R.drawable.white;
@@ -31,6 +49,13 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
     }
     public void setWord(String word){
         this.assignedWord = word;
+    }
+    public String getWord(){return this.assignedWord;}
+    public boolean equalTo(Card card){
+        if(this.assignedWord.equals(card.getWord())){
+            return true;
+        }
+        return false;
     }
 
     public Card(Context context) {

@@ -15,20 +15,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
 
 public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
-    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "ELEPHANT", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
+    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "Owl", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
     private ArrayList<Card> card_list;
 
     private Button btnEnd, btnSoundOn, btnSoundOff;
     private MediaPlayer player;
     private GridLayout field;
+    private TextView txtScore;
+    private int playerScore;
+    private Stack<Card> cardStack;
 
     private void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
@@ -56,6 +61,12 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             randomIndex = rand.nextInt(ary.length);
         }
         return randomIndex;
+    }
+    private void updateScore(){
+        if(playerScore < 0){
+            playerScore = 0;
+        }
+        txtScore.setText("Score: "+playerScore);
     }
     private void loadWords(){
         Random rand = new Random();
@@ -85,12 +96,15 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
         card_list = new ArrayList<Card>();
+        txtScore = findViewById(R.id.txtScore);
+        playerScore = 0;
+        cardStack = new Stack<Card>();
 
         //Test Ground for card field
         field = findViewById(R.id.cardField);
         field.setColumnCount(4);
-        field.setRowCount(5);
-        for(int i = 0; i < 20; i++){
+        //field.setRowCount(5);
+        for(int i = 0; i < 8; i++){
             Card temp  = new Card(this);
             temp.setOnClickListener(this);
             card_list.add(temp);
@@ -151,6 +165,27 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Card c = (Card) v;
-        showToast(c.flip());
+        c.limitFlip();
+        if(cardStack.empty()){
+            cardStack.push(c);
+        }
+        else if(cardStack.size()>1){
+            while(!cardStack.empty()){
+                cardStack.peek().reset();
+                cardStack.pop();
+            }
+            cardStack.push(c);
+        }
+        else if(cardStack.peek().equalTo(c)){
+            playerScore+=2;
+            cardStack.peek().freeze();
+            c.freeze();
+            cardStack.clear();
+        }
+        else{
+            cardStack.push(c);
+            playerScore-=1;
+        }
+        updateScore();
     }
 }
