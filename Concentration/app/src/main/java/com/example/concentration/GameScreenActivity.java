@@ -1,6 +1,7 @@
 package com.example.concentration;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -17,11 +18,12 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
-    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "BUTTERFLY", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
+    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "ELEPHANT", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
     private ArrayList<Card> card_list;
 
     private Button btnEnd, btnSoundOn, btnSoundOff;
@@ -34,6 +36,43 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     public static int dpToPx(int dp, Context context) {
         float density = context.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+    //Input: array that is used as a map
+    //Output: random index of a empty slot
+    //Note: returns -1 if array is full
+    private int getRandomAvailableIndex(int ary[]){
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(ary.length);
+        //Check if array is full
+        for(int i = 0; i < ary.length; i++){
+            if(ary[i]==0){
+                break;
+            }
+            if(i == ary.length-1 && ary[i]!=0) {
+                return -1;
+            }
+        }
+        while(ary[randomIndex]>0){
+            randomIndex = rand.nextInt(ary.length);
+        }
+        return randomIndex;
+    }
+    private void loadWords(){
+        Random rand = new Random();
+        int word_flag[] = new int[words.length];
+        int card_flag[] = new int[card_list.size()];
+
+        while(getRandomAvailableIndex(card_flag)!=-1){
+            int word_index = getRandomAvailableIndex(word_flag);
+            word_flag[word_index]+=1;
+            //Twice for one word
+            int card_index = getRandomAvailableIndex(card_flag);
+            card_flag[card_index]+=1;
+            card_list.get(card_index).setWord(words[word_index]);
+            card_index = getRandomAvailableIndex(card_flag);
+            card_flag[card_index]+=1;
+            card_list.get(card_index).setWord(words[word_index]);
+        }
     }
 
     @Override
@@ -57,6 +96,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             card_list.add(temp);
             field.addView(temp);
         }
+        loadWords();
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
@@ -111,6 +151,6 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Card c = (Card) v;
-        showToast(c.test());
+        showToast(c.flip());
     }
 }
