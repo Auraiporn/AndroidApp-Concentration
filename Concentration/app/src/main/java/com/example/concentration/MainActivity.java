@@ -1,12 +1,17 @@
 package com.example.concentration;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               //Open the screen of concentration game
-               openGameScreenActivity();
+               spawnDialog("Choose the amount of cards","Play");
             }
         });
         //Listener for Credit Button
@@ -54,19 +58,66 @@ public class MainActivity extends AppCompatActivity {
         btnScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open the screen of concentration game
-                openScoreScreenActivity();
+                spawnDialog("Choose the game type","HighScore");
+                //openScoreScreenActivity();
             }
         });
     }
+
+    private void spawnDialog(String prompt, String option){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton,null);
+        builder.setTitle(prompt);
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner_playButton);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.card_options));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        if(option=="Play") {
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(!spinner.getSelectedItem().toString().equalsIgnoreCase(getResources().getStringArray(R.array.card_options)[0])){
+                        openGameScreenActivity(spinner.getSelectedItem().toString());
+                    }
+                }
+            });
+        }
+        else if(option == "HighScore") {
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(!spinner.getSelectedItem().toString().equalsIgnoreCase(getResources().getStringArray(R.array.card_options)[0])){
+                        openScoreScreenActivity(spinner.getSelectedItem().toString());
+                    }
+                }
+            });
+        }
+        else{
+            return;
+        }
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     // open game screen when play button is pressed.
-    public void openGameScreenActivity(){
+    public void openGameScreenActivity(String cards){
        Intent intent = new Intent(this, GameScreenActivity.class);
+       intent.putExtra("extra_cardNumber", cards);
        startActivity(intent);
     }
     // open high score screen when high score button is pressed.
-    public void openScoreScreenActivity(){
+    public void openScoreScreenActivity(String gameType){
         Intent intent = new Intent(this, ScoreScreenActivity.class);
+        intent.putExtra("extra_gameType",gameType);
         startActivity(intent);
     }
     // open credit screen when credits button is pressed.

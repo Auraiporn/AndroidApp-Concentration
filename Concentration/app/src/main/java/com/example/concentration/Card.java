@@ -1,16 +1,21 @@
 package com.example.concentration;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+
+import java.io.Serializable;
 
 public class Card extends androidx.appcompat.widget.AppCompatButton {
 
     private Context context;
     private String assignedWord;
     private int background;
+    private boolean freeze;
 
     public static int dpToPx(int dp, Context context) {
         float density = context.getResources().getDisplayMetrics().density;
@@ -19,6 +24,7 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
     public void freeze(){
         this.setAlpha((float) 0.5);
         this.setEnabled(false);
+        this.freeze = true;
     }
     public void reset(){
         this.setAlpha(1);
@@ -26,6 +32,7 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         this.setBackgroundResource(background);
         this.setText("");
         this.setEnabled(true);
+        this.freeze = false;
     }
     public String limitFlip(){
         this.background = R.drawable.white;
@@ -74,6 +81,7 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         this.setBackgroundResource(background);
         this.background = background;
         this.setTextColor(getResources().getColor(textColor));
+        this.freeze = false;
 
         //Modify card size
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -82,5 +90,4 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         params.width = dpToPx(cardWidth,context);
         this.setLayoutParams(params);
     }
-
 }

@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Concentration</string>
+    <string-array name="card_options">
+        <item>Select number</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+    </string-array>
+    <string-array name="game_words">
+        <item>PANDA</item>
+        <item>TIGER</item>
+        <item>FISH</item>
+        <item>BIRD</item>
+        <item>Owl</item>
+        <item>DOG</item>
+        <item>CAT</item>
+        <item>COW</item>
+        <item>HORSE</item>
+        <item>MONKEY</item>
+    </string-array>
 </resources>

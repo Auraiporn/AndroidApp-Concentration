@@ -1,20 +1,11 @@
 package com.example.concentration;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +16,7 @@ import java.util.Stack;
 public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Variables
-    String[] words = {"PANDA", "TIGER","FISH", "BIRD", "Owl", "DOG", "CAT", "COW", "HORSE", "MONKEY"};
+    String[] words;
     private ArrayList<Card> card_list;
 
     private Button btnEnd, btnSoundOn, btnSoundOff;
@@ -34,18 +25,18 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     private TextView txtScore;
     private int playerScore;
     private Stack<Card> cardStack;
+    private Button btnTryAgain;
+    private boolean isFreeze;
 
+    //Show message for testing purpose
     private void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }
-    public static int dpToPx(int dp, Context context) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return Math.round((float) dp * density);
-    }
+
     //Input: array that is used as a map
     //Output: random index of a empty slot
     //Note: returns -1 if array is full
-    private int getRandomAvailableIndex(int ary[]){
+    private int getRandomAvailableIndex(int []ary){
         Random rand = new Random();
         int randomIndex = rand.nextInt(ary.length);
         //Check if array is full
@@ -62,16 +53,17 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         }
         return randomIndex;
     }
+    // Use to show score on screen
     private void updateScore(){
         if(playerScore < 0){
             playerScore = 0;
         }
         txtScore.setText("Score: "+playerScore);
     }
+    // Populate the gridlayout
     private void loadWords(){
-        Random rand = new Random();
-        int word_flag[] = new int[words.length];
-        int card_flag[] = new int[card_list.size()];
+        int []word_flag = new int[words.length];
+        int []card_flag = new int[card_list.size()];
 
         while(getRandomAvailableIndex(card_flag)!=-1){
             int word_index = getRandomAvailableIndex(word_flag);
@@ -91,26 +83,41 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
 
-        // Initialized buttons
+        // Initializations
         btnEnd = (Button) findViewById(R.id.btnEnd);
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
         btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
+        words = getResources().getStringArray(R.array.game_words);
         card_list = new ArrayList<Card>();
         txtScore = findViewById(R.id.txtScore);
         playerScore = 0;
         cardStack = new Stack<Card>();
+        btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
+        isFreeze = false;
+        updateScore();
 
         //Test Ground for card field
         field = findViewById(R.id.cardField);
-        field.setColumnCount(4);
-        //field.setRowCount(5);
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < Integer.parseInt(getIntent().getStringExtra("extra_cardNumber")); i++){
             Card temp  = new Card(this);
             temp.setOnClickListener(this);
             card_list.add(temp);
             field.addView(temp);
         }
         loadWords();
+        //Try Again Button add onCLick()
+        btnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cardStack.size()>1){
+                    while(!cardStack.empty()){
+                        cardStack.peek().reset();
+                        cardStack.pop();
+                    }
+                }
+                isFreeze = false;
+            }
+        });
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
@@ -147,6 +154,11 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState){
+//        super.onSaveInstanceState(outState);
+//    }
     // Method to release media player
     private void releaseMediaPlayer(){
         if(player != null)
@@ -165,26 +177,21 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Card c = (Card) v;
-        c.limitFlip();
-        if(cardStack.empty()){
+        if(!isFreeze){
+            c.limitFlip();
             cardStack.push(c);
         }
-        else if(cardStack.size()>1){
-            while(!cardStack.empty()){
-                cardStack.peek().reset();
-                cardStack.pop();
+        if(!isFreeze && cardStack.size()>1) {
+            if (cardStack.peek().equalTo(cardStack.firstElement())) {
+                playerScore += 2;
+                cardStack.peek().freeze();
+                cardStack.firstElement().freeze();
+                cardStack.clear();
+            } else {
+                cardStack.push(c);
+                playerScore -= 1;
+                isFreeze = true;
             }
-            cardStack.push(c);
-        }
-        else if(cardStack.peek().equalTo(c)){
-            playerScore+=2;
-            cardStack.peek().freeze();
-            c.freeze();
-            cardStack.clear();
-        }
-        else{
-            cardStack.push(c);
-            playerScore-=1;
         }
         updateScore();
     }
