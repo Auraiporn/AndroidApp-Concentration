@@ -58,11 +58,40 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         this.assignedWord = word;
     }
     public String getWord(){return this.assignedWord;}
+    public String getCardBackground(){return Integer.toString(this.background);}
+    public String getFreeze(){
+        if(freeze){
+            return "true";
+        }
+        else{
+            return "false";
+        }
+    }
+    public void loadInfo(String info){
+        String [] ary_info = info.split(",");
+        this.setWord(ary_info[0]);
+        this.background = Integer.parseInt(ary_info[1]);
+        if(ary_info[2].equals("true")){
+            this.freeze = true;
+        }
+        else{
+            this.freeze = false;
+        }
+    }
     public boolean equalTo(Card card){
         if(this.assignedWord.equals(card.getWord())){
             return true;
         }
         return false;
+    }
+    public void setCurrent(){
+        this.setBackgroundResource(background);
+        if(background == R.drawable.white){
+            this.setText(assignedWord);
+        }
+        if(freeze){
+            this.freeze();
+        }
     }
 
     public Card(Context context) {

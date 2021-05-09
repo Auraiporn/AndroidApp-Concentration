@@ -18,13 +18,12 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     //Variables
     String[] words;
     private ArrayList<Card> card_list;
-
     private Button btnEnd, btnSoundOn, btnSoundOff;
     private MediaPlayer player;
     private GridLayout field;
     private TextView txtScore;
     private int playerScore;
-    private Stack<Card> cardStack;
+    private Stack<Integer> cardStack;
     private Button btnTryAgain;
     private boolean isFreeze;
 
@@ -77,6 +76,25 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             card_list.get(card_index).setWord(words[word_index]);
         }
     }
+    private ArrayList<String> transferCards(ArrayList<Card> cardList){
+        ArrayList<String> string_card = new ArrayList<String>();
+        for(Card c: cardList){
+            String save = "";
+            save += c.getWord() + "," + c.getCardBackground() + "," + c.getFreeze();
+            string_card.add(save);
+        }
+        return string_card;
+    }
+    private ArrayList<Integer> translateStackToArray(Stack<Integer> stack){
+        ArrayList<Integer> ary = new ArrayList<Integer>();
+        if(stack.size()>0){
+            while(!stack.empty()){
+                ary.add(stack.peek());
+                stack.pop();
+            }
+        }
+        return ary;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +109,20 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         card_list = new ArrayList<Card>();
         txtScore = findViewById(R.id.txtScore);
         playerScore = 0;
-        cardStack = new Stack<Card>();
+        cardStack = new Stack<Integer>();
         btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
         isFreeze = false;
+        // Get Stack and score saves
+        if(savedInstanceState != null){
+            this.playerScore = savedInstanceState.getInt("score");
+            for(Integer x: savedInstanceState.getIntegerArrayList("card_stack")){
+                cardStack.push(x);
+            }
+            this.isFreeze = savedInstanceState.getBoolean("freeze");
+        }
         updateScore();
 
-        //Test Ground for card field
+        //Spawn Card field
         field = findViewById(R.id.cardField);
         for(int i = 0; i < Integer.parseInt(getIntent().getStringExtra("extra_cardNumber")); i++){
             Card temp  = new Card(this);
@@ -104,14 +130,25 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             card_list.add(temp);
             field.addView(temp);
         }
-        loadWords();
+        // Input words into the cards
+        if(savedInstanceState != null){
+            ArrayList<String> card_string_list = savedInstanceState.getStringArrayList("card_list");
+            for(int i = 0; i < card_list.size(); i++){
+                card_list.get(i).loadInfo(card_string_list.get(i));
+                card_list.get(i).setCurrent();
+            }
+        }
+        else{
+            loadWords();
+        }
+
         //Try Again Button add onCLick()
         btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(cardStack.size()>1){
                     while(!cardStack.empty()){
-                        cardStack.peek().reset();
+                        card_list.get(cardStack.peek()).reset();
                         cardStack.pop();
                     }
                 }
@@ -155,10 +192,14 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState){
-//        super.onSaveInstanceState(outState);
-//    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("card_list",transferCards(this.card_list));
+        outState.putIntegerArrayList("card_stack",translateStackToArray(this.cardStack));
+        outState.putInt("score",playerScore);
+        outState.putBoolean("freeze",this.isFreeze);
+    }
     // Method to release media player
     private void releaseMediaPlayer(){
         if(player != null)
@@ -179,16 +220,16 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         Card c = (Card) v;
         if(!isFreeze){
             c.limitFlip();
-            cardStack.push(c);
+            cardStack.push(card_list.indexOf(c));
         }
         if(!isFreeze && cardStack.size()>1) {
-            if (cardStack.peek().equalTo(cardStack.firstElement())) {
+            if (card_list.get(cardStack.peek()).equalTo((card_list.get(cardStack.firstElement())))){
                 playerScore += 2;
-                cardStack.peek().freeze();
-                cardStack.firstElement().freeze();
+                card_list.get(cardStack.peek()).freeze();
+                card_list.get(cardStack.firstElement()).freeze();
                 cardStack.clear();
             } else {
-                cardStack.push(c);
+                cardStack.push(card_list.indexOf(c));
                 playerScore -= 1;
                 isFreeze = true;
             }
