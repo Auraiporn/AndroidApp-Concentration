@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="130dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="130dp"
         android:src="@drawable/star" />
 
     <Button
-        android:id="@+id/btnback"
+        android:id="@+id/btnBack"
         android:layout_width="164dp"
         android:layout_height="78dp"
         android:layout_alignParentStart="true"
@@ -27,10 +27,10 @@
         android:layout_marginBottom="40dp"
         android:text="Back"
         tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp"/>
+        tools:layout_editor_absoluteY="582dp" />
 
     <TextView
-        android:id="@+id/textview1"
+        android:id="@+id/txtScoreScreenTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -44,5 +44,60 @@
         android:textAlignment="center"
         android:textColor="#D3A418"
         android:textSize="70sp" />
+
+    <TextView
+        android:id="@+id/txtTop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtScoreScreenTitle"
+        android:text="ABC : ..."
+        android:layout_margin="10dp"
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop3"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop4"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -1,19 +1,29 @@
 package com.example.concentration;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener, Dialog_Score.DialogListener{
 
     //Variables
     String[] words;
@@ -24,8 +34,10 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     private TextView txtScore;
     private int playerScore;
     private Stack<Integer> cardStack;
-    private Button btnTryAgain;
+    private Button btnTryAgain, btnNewGame;
     private boolean isFreeze;
+    private String userName;
+    private static final String FILE_NAME = "score.txt";
 
     //Show message for testing purpose
     private void showToast(String msg){
@@ -95,6 +107,10 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         }
         return ary;
     }
+    private void openDialog(){
+        Dialog_Score dialog = new Dialog_Score();
+        dialog.show(getSupportFragmentManager(),"dialog_score");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +127,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         playerScore = 0;
         cardStack = new Stack<Integer>();
         btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
+        btnNewGame = (Button) findViewById(R.id.btnNewGame);
         isFreeze = false;
+        userName = "";
         // Get Stack and score saves
         if(savedInstanceState != null){
             this.playerScore = savedInstanceState.getInt("score");
@@ -155,6 +173,12 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
                 isFreeze = false;
             }
         });
+        btnNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spawnDialog("Choose the amount of cards","Play");
+            }
+        });
 
         // Action listener to start music
         player = MediaPlayer.create(this,R.raw.sb_indreams);
@@ -186,8 +210,21 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                System.exit(0);
+                for(Card c:card_list){
+                    c.reveal();
+                }
+                Thread wait = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(2*1000);
+                            openDialog();
+                        }
+                        catch (Exception e) {
+                        }
+                    }
+                };
+                // start thread
+                wait.start();
             }
         });
     }
@@ -235,5 +272,78 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             }
         }
         updateScore();
+    }
+    //Triggers when click confirm
+    @Override
+    public void getUserName(String name) {
+        this.userName = name;
+        try {
+            save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    public void save() throws IOException {
+        String info = this.userName + "," + Integer.toString(this.playerScore) + "," + getIntent().getStringExtra("extra_cardNumber") + "\n";
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(FILE_NAME,MODE_APPEND);
+            fos.write(info.getBytes());
+            showToast("Score Saved!");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(fos !=null){
+                fos.close();
+            }
+        }
+    }
+    //Restart Package
+    private void spawnDialog(String prompt,String option){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameScreenActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton,null);
+        builder.setTitle(prompt);
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner_playButton);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(GameScreenActivity.this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.card_options));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        if(option=="Play") {
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(!spinner.getSelectedItem().toString().equalsIgnoreCase(getResources().getStringArray(R.array.card_options)[0])){
+                        openGameScreenActivity(spinner.getSelectedItem().toString());
+                    }
+                }
+            });
+        }
+        else{
+            return;
+        }
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                // Open the score screen
+                // openScoreScreenActivity();
+            }
+        });
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    public void openGameScreenActivity(String cards){
+        Intent intent = new Intent(this, GameScreenActivity.class);
+        intent.putExtra("extra_cardNumber", cards);
+        startActivity(intent);
+        finish();
     }
 }

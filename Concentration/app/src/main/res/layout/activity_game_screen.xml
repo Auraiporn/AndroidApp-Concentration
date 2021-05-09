@@ -54,7 +54,7 @@
         android:text="Try Again" />
 
     <Button
-        android:id="@+id/btnNew"
+        android:id="@+id/btnNewGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
