@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class CreditScreenActivity extends AppCompatActivity {
 
     //Variables
-    Animation topAnim, bottomAnim;
+    Animation rightAnim;
     Button btnback;
     TextView Title, Team, Haowen, Beize, Amir, Auraiporn;
     pl.droidsonroids.gif.GifImageView gif;
@@ -24,8 +24,8 @@ public class CreditScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credit_screen);
 
         //Animations
-        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+        rightAnim = AnimationUtils.loadAnimation(this,R.anim.right_animation);
+
 
         //Hooks
         Button btnback = (Button)findViewById(R.id.btnback);
@@ -36,13 +36,13 @@ public class CreditScreenActivity extends AppCompatActivity {
         TextView amir = (TextView)findViewById(R.id.Amir);
         TextView auraiporn = (TextView)findViewById(R.id.Auraiporn);
 
-        btnback.setAnimation(bottomAnim);
-        credits.setAnimation(topAnim);
-        title.setAnimation(topAnim);
-        haowen.setAnimation(topAnim);
-        beize.setAnimation(topAnim);
-        amir.setAnimation(bottomAnim);
-        auraiporn.setAnimation(bottomAnim);
+        btnback.setAnimation(rightAnim);
+        credits.setAnimation(rightAnim);
+        title.setAnimation(rightAnim);
+        haowen.setAnimation(rightAnim);
+        beize.setAnimation(rightAnim);
+        amir.setAnimation(rightAnim);
+        auraiporn.setAnimation(rightAnim);
 
     //listener for back button
         btnback.setOnClickListener(new View.OnClickListener() {

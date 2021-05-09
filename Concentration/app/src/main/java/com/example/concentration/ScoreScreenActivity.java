@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class ScoreScreenActivity extends AppCompatActivity {
 
     //Variables
-    Animation topAnim, bottomAnim;
+    Animation rightAnim;
     TextView textview1;
     Button btnback;
 
@@ -23,14 +23,13 @@ public class ScoreScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score_screen);
 
         //Animations
-        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+        rightAnim = AnimationUtils.loadAnimation(this,R.anim.right_animation);
 
         //Hooks
         Button btnback = (Button) findViewById(R.id.btnback);
         TextView HighScore = (TextView) findViewById(R.id.textview1);
-        HighScore.setAnimation(topAnim);
-        btnback.setAnimation(bottomAnim);
+        HighScore.setAnimation(rightAnim);
+        btnback.setAnimation(rightAnim);
 
         //Listener for back button
         btnback.setOnClickListener(new View.OnClickListener() {

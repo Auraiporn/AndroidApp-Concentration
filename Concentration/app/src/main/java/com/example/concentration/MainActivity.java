@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
 
+
         //Hooks
         Button btnPlay = (Button)findViewById(R.id.btnStartGame);
         Button btnScore = (Button)findViewById(R.id.btnHighScore);
@@ -45,12 +46,15 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                spawnDialog("Choose the amount of cards","Play");
+                //Open game screen
+           //    openGameScreenActivity();
             }
         });
         //Listener for Credit Button
         btnCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // open credit screen
                 openCreditScreenActivity();
             }
         });
@@ -102,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                // Open the score screen
+               // openScoreScreenActivity();
             }
         });
         builder.setView(view);
