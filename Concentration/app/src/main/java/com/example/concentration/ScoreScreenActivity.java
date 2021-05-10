@@ -31,6 +31,9 @@ public class ScoreScreenActivity extends AppCompatActivity {
     private PriorityQueue<Player> pq;
     private static final String FILE_NAME = "score.txt";
 
+    //Input: None
+    //Output: None
+    //Note: read local file for records
     public void read() throws IOException {
         FileInputStream fis = null;
         try {
@@ -55,6 +58,10 @@ public class ScoreScreenActivity extends AppCompatActivity {
             }
         }
     }
+    //Input: None
+    //Output: None
+    //Note: Loop through all information read
+    // and pickup corresponding game type and put the data into Priority Queue.
     public void load(){
         for(String s : allPlayerInfo){
             String [] info = s.split(",");
@@ -119,7 +126,9 @@ public class ScoreScreenActivity extends AppCompatActivity {
             }
         });
     }
-    // open main screen when back is pressed.
+    //Input: None
+    //Output: None
+    //Note: open main screen when back is pressed.
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

@@ -65,7 +65,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         return randomIndex;
     }
 
-    // Use to show score on screen
+    //Input: None
+    //Output: None
+    //Note: Update the score with corresponding TextView
     private void updateScore() {
         if (playerScore < 0) {
             playerScore = 0;
@@ -73,7 +75,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         txtScore.setText("Score: " + playerScore);
     }
 
-    // Populate the gridlayout
+    //Input: None
+    //Output: None
+    //Note: Populate the Card with words
     private void loadWords() {
         int[] word_flag = new int[words.length];
         int[] card_flag = new int[card_list.size()];
@@ -91,6 +95,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Input: ArrayList<Card>
+    //Output: ArrayList<String>
+    //Note: Translate the ArrayList<Card> to ArrayList<String> to be save into Bundle
     private ArrayList<String> transferCards(ArrayList<Card> cardList) {
         ArrayList<String> string_card = new ArrayList<String>();
         for (Card c : cardList) {
@@ -101,6 +108,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         return string_card;
     }
 
+    //Input: Stack<Integer>
+    //Output: ArrayList<Integer>
+    //Note: Translate stack of card index to ArrayList to be save into Bundle
     private ArrayList<Integer> translateStackToArray(Stack<Integer> stack) {
         ArrayList<Integer> ary = new ArrayList<Integer>();
         if (stack.size() > 0) {
@@ -112,11 +122,17 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         return ary;
     }
 
+    //Input: None
+    //Output: None
+    //Note: Spawn dialogue for score and exit the Activity
     private void openDialog() {
         Dialog_Score dialog = new Dialog_Score();
         dialog.show(getSupportFragmentManager(), "dialog_score");
     }
 
+    //Input: None
+    //Output: None
+    //Note: Check if the game is over
     private void checkEndGame() {
         float terminal = (float) 0.5;
         for (Card c : card_list) {
@@ -197,6 +213,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
                 isFreeze = false;
             }
         });
+        // New game Button add OnClick()
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,6 +263,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+    //Handle rotation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -255,7 +273,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         outState.putBoolean("freeze", this.isFreeze);
     }
 
-    // Method to release media player
+    //Input: None
+    //Output: None
+    //Note: Method to release media player
     private void releaseMediaPlayer() {
         if (player != null) {
             player.release();
@@ -263,12 +283,18 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //Input: None
+    //Output: None
+    //Note: Listener for media player
     @Override
     protected void onStop() {
         super.onStop();
         releaseMediaPlayer();
     }
 
+    //Input: None
+    //Output: None
+    //Note: Listener for each card pressed
     @Override
     public void onClick(View v) {
         Card c = (Card) v;
@@ -292,7 +318,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         checkEndGame();
     }
 
-    //Triggers when click confirm
+    //Input: None
+    //Output: None
+    //Note: Triggers when click confirm
     @Override
     public void getUserName(String name, Boolean skip) {
         this.userName = name;
@@ -308,6 +336,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
+    //Input: None
+    //Output: None
+    //Note: Save user name and score to local file.
     public void save() throws IOException {
         String info = this.userName + "," + Integer.toString(this.playerScore) + "," + getIntent().getStringExtra("extra_cardNumber") + "\n";
         FileOutputStream fos = null;
@@ -326,7 +357,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //Restart Package
+    //Input: prompt you want to display; option is to distinguish Play button and HighScore button
+    //Output: None
+    //Note: Restart game package from MainActivity
     private void spawnDialog(String prompt, String option) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameScreenActivity.this);
         View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton, null);
@@ -363,6 +396,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         dialog.show();
     }
 
+    //Input: None
+    //Output: None
+    //Note: Open the GameActivity again for New Game Button
     public void openGameScreenActivity(String cards) {
         Intent intent = new Intent(this, GameScreenActivity.class);
         intent.putExtra("extra_cardNumber", cards);

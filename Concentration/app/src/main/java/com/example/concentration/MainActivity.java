@@ -15,10 +15,10 @@ import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
 
-   //Variables
-    Animation topAnim, bottomAnim;
-    Button btnStartGame, btnHighScore, btnCredit;
-    pl.droidsonroids.gif.GifImageView gif;
+    //Variables
+    private Animation topAnim, bottomAnim;
+    private Button btnStartGame, btnHighScore, btnCredit;
+    private pl.droidsonroids.gif.GifImageView gif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Input: prompt you want to display; option is to distinguish Play button and HighScore button
+    //Output: None
+    //Note: Create a dialog to select number of cards.
     private void spawnDialog(String prompt, String option){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton,null);
@@ -114,19 +117,25 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    // open game screen when play button is pressed.
+    //Input: None
+    //Output: None
+    //Note: open game screen when play button is pressed.
     public void openGameScreenActivity(String cards){
        Intent intent = new Intent(this, GameScreenActivity.class);
        intent.putExtra("extra_cardNumber", cards);
        startActivity(intent);
     }
-    // open high score screen when high score button is pressed.
+    //Input: None
+    //Output: None
+    //Note: open high score screen when high score button is pressed.
     public void openScoreScreenActivity(String gameType){
         Intent intent = new Intent(this, ScoreScreenActivity.class);
         intent.putExtra("extra_gameType",gameType);
         startActivity(intent);
     }
-    // open credit screen when credits button is pressed.
+    //Input: None
+    //Output: None
+    //Note: open credit screen when credits button is pressed.
     public void openCreditScreenActivity(){
         Intent intent = new Intent(this, CreditScreenActivity.class);
         startActivity(intent);
