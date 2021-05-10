@@ -45,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
         Button btnScore = (Button)findViewById(R.id.btnHighScore);
         Button btnCredit = (Button)findViewById(R.id.btnCredit);
         pl.droidsonroids.gif.GifImageView Giphy = (pl.droidsonroids.gif.GifImageView)findViewById(R.id.gif);
+        Switch switchSong = (Switch)findViewById(R.id.switchSong);
 
         btnPlay.setAnimation(bottomAnim);
         btnScore.setAnimation(bottomAnim);
         btnCredit.setAnimation(bottomAnim);
         Giphy.setAnimation(topAnim);
+        switchSong.setAnimation(bottomAnim);
 
         // Listener for Play button
         btnPlay.setOnClickListener(new View.OnClickListener() {
