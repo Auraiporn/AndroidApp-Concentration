@@ -5,47 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ScoreScreenActivity">
+    tools:context=".ScoreScreenActivity"
+    android:orientation="horizontal">
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/star" />
 
     <Button
-        android:id="@+id/btnback"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="600dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="20dp"
-        android:text="Back"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
-
-    <TextView
-        android:id="@+id/textview1"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="80dp"
+        android:text="Back"
+        android:layout_toRightOf="@+id/txtTop5"
+        android:layout_marginTop="300dp"
+        android:layout_marginStart="200dp"
+        />
+
+    <TextView
+        android:id="@+id/txtScoreScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/bangers"
         android:text="High Scores"
-        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
         android:textColor="#D3A418"
-        android:textSize="60sp" />
+        android:textSize="70sp" />
+
+    <TextView
+        android:id="@+id/txtTop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtScoreScreenTitle"
+        android:text="ABC : ..."
+        android:layout_margin="10dp"
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop3"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtTop5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTop4"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="ABC : ..."
+        android:textColor="#D3A418"
+        android:textSize="20sp" />
 
 </RelativeLayout>

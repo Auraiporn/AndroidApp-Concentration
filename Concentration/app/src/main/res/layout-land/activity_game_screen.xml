@@ -15,51 +15,67 @@
         android:layout_height="wrap_content"
         android:useDefaultMargins="true"
         android:alignmentMode="alignBounds"
-        android:columnCount="4">
+        android:layout_centerInParent="true"
+        android:columnCount="5">
 
     </GridLayout>
+
     <TextView
+        android:id="@+id/txtScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/txtScore"
-        android:layout_marginStart="600dp"
-        android:layout_marginTop="100dp"
-        android:text="Score: "/>
+        android:fontFamily="@font/bangers"
+        android:layout_alignLeft="@+id/btnNewGame"
+        android:layout_marginTop="50dp"
+        android:text="Score: "
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginStart="650dp"
-        android:text="End" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:text="End Game" />
+
     <Button
         android:id="@+id/btnTryAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginStart="450dp"
-        android:text="Try Again" />
+        android:layout_alignLeft="@+id/btnEnd"
+        android:text="Try Again"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/btnEnd"/>
+
+    <Button
+        android:id="@+id/btnNewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="20dp"
+        android:text="New Game" />
 
     <Button
         android:id="@+id/btnSoundOn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="720dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="676dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/txtScore"
+        android:layout_marginLeft="550dp"
+        android:layout_alignBottom="@+id/txtScore"
         android:foreground="@android:drawable/ic_lock_silent_mode_off"
         android:text="" />
 
     <Button
         android:id="@+id/btnSoundOff"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="720dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="580dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/btnSoundOn"
+        android:layout_toRightOf="@+id/btnSoundOn"
+        android:layout_marginLeft="20dp"
         android:foreground="@android:drawable/ic_lock_silent_mode"
         android:text="" />
+
 </RelativeLayout>

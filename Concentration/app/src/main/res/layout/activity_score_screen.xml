@@ -8,26 +8,22 @@
     tools:context=".ScoreScreenActivity">
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="130dp"
         android:src="@drawable/star" />
 
     <Button
         android:id="@+id/btnBack"
-        android:layout_width="164dp"
-        android:layout_height="78dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="230dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
-        android:text="Back"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:text="Back"/>
 
     <TextView
         android:id="@+id/txtScoreScreenTitle"
