@@ -28,9 +28,7 @@
         android:layout_marginStart="287dp"
         android:layout_marginEnd="293dp"
         android:layout_marginBottom="40dp"
-        android:text="Play"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:text="Play" />
 
     <Button
         android:id="@+id/btnHighScore"
@@ -42,9 +40,7 @@
         android:layout_marginStart="55dp"
         android:layout_marginEnd="525dp"
         android:layout_marginBottom="40dp"
-        android:text="High Score"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:text="High Score" />
 
     <Button
         android:id="@+id/btnCredit"
@@ -56,9 +52,17 @@
         android:layout_marginStart="525dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="40dp"
-        android:text="Credits"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:text="Credits" />
+
+    <Switch
+        android:id="@+id/switchSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/gif"
+        android:layout_marginRight="-730dp"
+        android:layout_toLeftOf="@id/btnCredit"
+        android:fontFamily="@font/bangers"
+        android:text="Music" />
 
 
 </RelativeLayout>

@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
     private Animation topAnim, bottomAnim;
     private Button btnStartGame, btnHighScore, btnCredit;
     private pl.droidsonroids.gif.GifImageView gif;
+    MediaPlayer music;
+    private Switch switchSong;
+    public boolean playing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        music = MediaPlayer.create(MainActivity.this,R.raw.sb_indreams);
+        player();
 
         //Animations
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -66,6 +76,28 @@ public class MainActivity extends AppCompatActivity {
                 //openScoreScreenActivity();
             }
         });
+    }
+    //Method for music
+    public void player() {
+        Switch switchSong = (Switch) findViewById(R.id.switchSong);
+        switchSong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.v("Switch State=", ""+isChecked);
+                if(switchSong.isChecked()){
+                    music.start();
+                    playing = true;
+                } else{
+                    music.pause();
+                    playing = false;
+                }
+            }
+        });
+    }
+
+    public void onPause() {
+        super.onPause();
+        music.pause();
     }
 
     //Input: prompt you want to display; option is to distinguish Play button and HighScore button

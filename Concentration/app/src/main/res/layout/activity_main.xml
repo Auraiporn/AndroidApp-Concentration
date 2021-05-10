@@ -11,54 +11,43 @@
         android:id="@+id/gif"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="253dp"
         android:src="@drawable/penguin_giphy" />
 
     <Button
         android:id="@+id/btnStartGame"
-        android:layout_width="164dp"
-        android:layout_height="78dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="183dp"
-        android:text="Play"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gif"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="Play" />
 
     <Button
         android:id="@+id/btnHighScore"
-        android:layout_width="164dp"
-        android:layout_height="78dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="94dp"
-        android:text="High Score"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnStartGame"
+        android:layout_alignLeft="@+id/btnStartGame"
+        android:layout_marginBottom="20dp"
+        android:text="High Score" />
 
     <Button
         android:id="@+id/btnCredit"
-        android:layout_width="164dp"
-        android:layout_height="78dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="7dp"
-        android:text="Credits"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="582dp" />
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnHighScore"
+        android:layout_alignLeft="@+id/btnHighScore"
+        android:layout_marginBottom="20dp"
+        android:text="Credits" />
 
+    <Switch
+        android:id="@+id/switchSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music"
+        android:layout_toRightOf="@id/btnCredit"
+        android:layout_alignBottom="@id/btnCredit"
+        android:fontFamily="@font/bangers"
+        android:layout_marginLeft="40dp"/>
 
 </RelativeLayout>

@@ -58,24 +58,4 @@
         android:layout_marginLeft="20dp"
         android:text="New Game" />
 
-    <Button
-        android:id="@+id/btnSoundOn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_toRightOf="@+id/txtScore"
-        android:layout_marginLeft="550dp"
-        android:layout_alignBottom="@+id/txtScore"
-        android:foreground="@android:drawable/ic_lock_silent_mode_off"
-        android:text="" />
-
-    <Button
-        android:id="@+id/btnSoundOff"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/btnSoundOn"
-        android:layout_toRightOf="@+id/btnSoundOn"
-        android:layout_marginLeft="20dp"
-        android:foreground="@android:drawable/ic_lock_silent_mode"
-        android:text="" />
-
 </RelativeLayout>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,7 +13,6 @@ import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -28,8 +26,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     //Variables
     String[] words;
     private ArrayList<Card> card_list;
-    private Button btnEnd, btnSoundOn, btnSoundOff;
-    private MediaPlayer player;
+    private Button btnEnd;
     private GridLayout field;
     private TextView txtScore;
     private int playerScore;
@@ -160,8 +157,6 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
 
         // Initializations
         btnEnd = (Button) findViewById(R.id.btnEnd);
-        btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
-        btnSoundOff = (Button) findViewById(R.id.btnSoundOff);
         words = getResources().getStringArray(R.array.game_words);
         card_list = new ArrayList<Card>();
         txtScore = findViewById(R.id.txtScore);
@@ -221,26 +216,6 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        // Action listener to start music
-        player = MediaPlayer.create(this, R.raw.sb_indreams);
-        btnSoundOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.start();
-                player.setLooping(true);
-
-            }
-        });
-        // Action listener to stop music
-        player = MediaPlayer.create(this, R.raw.sb_indreams);
-        btnSoundOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.pause();
-
-            }
-        });
-
         //listener for End button
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,25 +246,6 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         outState.putIntegerArrayList("card_stack", translateStackToArray(this.cardStack));
         outState.putInt("score", playerScore);
         outState.putBoolean("freeze", this.isFreeze);
-    }
-
-    //Input: None
-    //Output: None
-    //Note: Method to release media player
-    private void releaseMediaPlayer() {
-        if (player != null) {
-            player.release();
-            player = null;
-        }
-    }
-
-    //Input: None
-    //Output: None
-    //Note: Listener for media player
-    @Override
-    protected void onStop() {
-        super.onStop();
-        releaseMediaPlayer();
     }
 
     //Input: None
@@ -340,6 +296,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     //Output: None
     //Note: Save user name and score to local file.
     public void save() throws IOException {
+        if(this.userName.contains("\n")){
+            this.userName = this.userName.replace("\n","");
+        }
         String info = this.userName + "," + Integer.toString(this.playerScore) + "," + getIntent().getStringExtra("extra_cardNumber") + "\n";
         FileOutputStream fos = null;
         try {
