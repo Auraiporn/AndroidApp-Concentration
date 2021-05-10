@@ -186,6 +186,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 player.start();
+                player.setLooping(true);
 
             }
         });
@@ -196,13 +197,6 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 player.pause();
 
-            }
-        });
-        // Release the music player when music is played completely.
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                releaseMediaPlayer();
             }
         });
 
