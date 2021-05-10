@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener, Dialog_Score.DialogListener{
+public class GameScreenActivity extends AppCompatActivity implements View.OnClickListener, Dialog_Score.DialogListener {
 
     //Variables
     String[] words;
@@ -40,76 +40,101 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     private static final String FILE_NAME = "score.txt";
 
     //Show message for testing purpose
-    private void showToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     //Input: array that is used as a map
     //Output: random index of a empty slot
     //Note: returns -1 if array is full
-    private int getRandomAvailableIndex(int []ary){
+    private int getRandomAvailableIndex(int[] ary) {
         Random rand = new Random();
         int randomIndex = rand.nextInt(ary.length);
         //Check if array is full
-        for(int i = 0; i < ary.length; i++){
-            if(ary[i]==0){
+        for (int i = 0; i < ary.length; i++) {
+            if (ary[i] == 0) {
                 break;
             }
-            if(i == ary.length-1 && ary[i]!=0) {
+            if (i == ary.length - 1 && ary[i] != 0) {
                 return -1;
             }
         }
-        while(ary[randomIndex]>0){
+        while (ary[randomIndex] > 0) {
             randomIndex = rand.nextInt(ary.length);
         }
         return randomIndex;
     }
+
     // Use to show score on screen
-    private void updateScore(){
-        if(playerScore < 0){
+    private void updateScore() {
+        if (playerScore < 0) {
             playerScore = 0;
         }
-        txtScore.setText("Score: "+playerScore);
+        txtScore.setText("Score: " + playerScore);
     }
-    // Populate the gridlayout
-    private void loadWords(){
-        int []word_flag = new int[words.length];
-        int []card_flag = new int[card_list.size()];
 
-        while(getRandomAvailableIndex(card_flag)!=-1){
+    // Populate the gridlayout
+    private void loadWords() {
+        int[] word_flag = new int[words.length];
+        int[] card_flag = new int[card_list.size()];
+
+        while (getRandomAvailableIndex(card_flag) != -1) {
             int word_index = getRandomAvailableIndex(word_flag);
-            word_flag[word_index]+=1;
+            word_flag[word_index] += 1;
             //Twice for one word
             int card_index = getRandomAvailableIndex(card_flag);
-            card_flag[card_index]+=1;
+            card_flag[card_index] += 1;
             card_list.get(card_index).setWord(words[word_index]);
             card_index = getRandomAvailableIndex(card_flag);
-            card_flag[card_index]+=1;
+            card_flag[card_index] += 1;
             card_list.get(card_index).setWord(words[word_index]);
         }
     }
-    private ArrayList<String> transferCards(ArrayList<Card> cardList){
+
+    private ArrayList<String> transferCards(ArrayList<Card> cardList) {
         ArrayList<String> string_card = new ArrayList<String>();
-        for(Card c: cardList){
+        for (Card c : cardList) {
             String save = "";
             save += c.getWord() + "," + c.getCardBackground() + "," + c.getFreeze();
             string_card.add(save);
         }
         return string_card;
     }
-    private ArrayList<Integer> translateStackToArray(Stack<Integer> stack){
+
+    private ArrayList<Integer> translateStackToArray(Stack<Integer> stack) {
         ArrayList<Integer> ary = new ArrayList<Integer>();
-        if(stack.size()>0){
-            while(!stack.empty()){
+        if (stack.size() > 0) {
+            while (!stack.empty()) {
                 ary.add(stack.peek());
                 stack.pop();
             }
         }
         return ary;
     }
-    private void openDialog(){
+
+    private void openDialog() {
         Dialog_Score dialog = new Dialog_Score();
-        dialog.show(getSupportFragmentManager(),"dialog_score");
+        dialog.show(getSupportFragmentManager(), "dialog_score");
+    }
+
+    private void checkEndGame() {
+        float terminal = (float) 0.5;
+        for (Card c : card_list) {
+            if (Float.compare(c.getAlpha(), terminal) != 0) {
+                return;
+            }
+        }
+        Thread wait = new Thread() {
+            public void run() {
+                try {
+                    sleep(1 * 1000);
+                    openDialog();
+                } catch (Exception e) {
+                }
+            }
+        };
+        // start thread
+        wait.start();
     }
 
     @Override
@@ -120,7 +145,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         // Initializations
         btnEnd = (Button) findViewById(R.id.btnEnd);
         btnSoundOn = (Button) findViewById(R.id.btnSoundOn);
-        btnSoundOff = (Button)findViewById(R.id.btnSoundOff);
+        btnSoundOff = (Button) findViewById(R.id.btnSoundOff);
         words = getResources().getStringArray(R.array.game_words);
         card_list = new ArrayList<Card>();
         txtScore = findViewById(R.id.txtScore);
@@ -131,9 +156,9 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         isFreeze = false;
         userName = "";
         // Get Stack and score saves
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             this.playerScore = savedInstanceState.getInt("score");
-            for(Integer x: savedInstanceState.getIntegerArrayList("card_stack")){
+            for (Integer x : savedInstanceState.getIntegerArrayList("card_stack")) {
                 cardStack.push(x);
             }
             this.isFreeze = savedInstanceState.getBoolean("freeze");
@@ -142,21 +167,20 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
 
         //Spawn Card field
         field = findViewById(R.id.cardField);
-        for(int i = 0; i < Integer.parseInt(getIntent().getStringExtra("extra_cardNumber")); i++){
-            Card temp  = new Card(this);
+        for (int i = 0; i < Integer.parseInt(getIntent().getStringExtra("extra_cardNumber")); i++) {
+            Card temp = new Card(this);
             temp.setOnClickListener(this);
             card_list.add(temp);
             field.addView(temp);
         }
         // Input words into the cards
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             ArrayList<String> card_string_list = savedInstanceState.getStringArrayList("card_list");
-            for(int i = 0; i < card_list.size(); i++){
+            for (int i = 0; i < card_list.size(); i++) {
                 card_list.get(i).loadInfo(card_string_list.get(i));
                 card_list.get(i).setCurrent();
             }
-        }
-        else{
+        } else {
             loadWords();
         }
 
@@ -164,8 +188,8 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cardStack.size()>1){
-                    while(!cardStack.empty()){
+                if (cardStack.size() > 1) {
+                    while (!cardStack.empty()) {
                         card_list.get(cardStack.peek()).reset();
                         cardStack.pop();
                     }
@@ -176,12 +200,12 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spawnDialog("Choose the amount of cards","Play");
+                spawnDialog("Choose the amount of cards", "Play");
             }
         });
 
         // Action listener to start music
-        player = MediaPlayer.create(this,R.raw.sb_indreams);
+        player = MediaPlayer.create(this, R.raw.sb_indreams);
         btnSoundOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,7 +215,7 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
         // Action listener to stop music
-        player = MediaPlayer.create(this,R.raw.sb_indreams);
+        player = MediaPlayer.create(this, R.raw.sb_indreams);
         btnSoundOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,16 +228,15 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(Card c:card_list){
+                for (Card c : card_list) {
                     c.reveal();
                 }
                 Thread wait = new Thread() {
                     public void run() {
                         try {
-                            sleep(2*1000);
-                            openDialog();
-                        }
-                        catch (Exception e) {
+                            sleep(1 * 1000);
+                            checkEndGame();
+                        } catch (Exception e) {
                         }
                     }
                 };
@@ -224,17 +247,17 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList("card_list",transferCards(this.card_list));
-        outState.putIntegerArrayList("card_stack",translateStackToArray(this.cardStack));
-        outState.putInt("score",playerScore);
-        outState.putBoolean("freeze",this.isFreeze);
+        outState.putStringArrayList("card_list", transferCards(this.card_list));
+        outState.putIntegerArrayList("card_stack", translateStackToArray(this.cardStack));
+        outState.putInt("score", playerScore);
+        outState.putBoolean("freeze", this.isFreeze);
     }
+
     // Method to release media player
-    private void releaseMediaPlayer(){
-        if(player != null)
-        {
+    private void releaseMediaPlayer() {
+        if (player != null) {
             player.release();
             player = null;
         }
@@ -249,12 +272,12 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Card c = (Card) v;
-        if(!isFreeze){
+        if (!isFreeze) {
             c.limitFlip();
             cardStack.push(card_list.indexOf(c));
         }
-        if(!isFreeze && cardStack.size()>1) {
-            if (card_list.get(cardStack.peek()).equalTo((card_list.get(cardStack.firstElement())))){
+        if (!isFreeze && cardStack.size() > 1) {
+            if (card_list.get(cardStack.peek()).equalTo((card_list.get(cardStack.firstElement())))) {
                 playerScore += 2;
                 card_list.get(cardStack.peek()).freeze();
                 card_list.get(cardStack.firstElement()).freeze();
@@ -266,41 +289,47 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
             }
         }
         updateScore();
+        checkEndGame();
     }
+
     //Triggers when click confirm
     @Override
-    public void getUserName(String name) {
+    public void getUserName(String name, Boolean skip) {
         this.userName = name;
-        try {
-            save();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!skip) {
+            try {
+                save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
+
     public void save() throws IOException {
         String info = this.userName + "," + Integer.toString(this.playerScore) + "," + getIntent().getStringExtra("extra_cardNumber") + "\n";
         FileOutputStream fos = null;
         try {
-            fos = openFileOutput(FILE_NAME,MODE_APPEND);
+            fos = openFileOutput(FILE_NAME, MODE_APPEND);
             fos.write(info.getBytes());
             showToast("Score Saved!");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(fos !=null){
+        } finally {
+            if (fos != null) {
                 fos.close();
             }
         }
     }
+
     //Restart Package
-    private void spawnDialog(String prompt,String option){
+    private void spawnDialog(String prompt, String option) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameScreenActivity.this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton,null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner_playbutton, null);
         builder.setTitle(prompt);
         Spinner spinner = (Spinner) view.findViewById(R.id.spinner_playButton);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(GameScreenActivity.this,
@@ -308,17 +337,16 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
                 getResources().getStringArray(R.array.card_options));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        if(option=="Play") {
+        if (option == "Play") {
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if(!spinner.getSelectedItem().toString().equalsIgnoreCase(getResources().getStringArray(R.array.card_options)[0])){
+                    if (!spinner.getSelectedItem().toString().equalsIgnoreCase(getResources().getStringArray(R.array.card_options)[0])) {
                         openGameScreenActivity(spinner.getSelectedItem().toString());
                     }
                 }
             });
-        }
-        else{
+        } else {
             return;
         }
 
@@ -334,7 +362,8 @@ public class GameScreenActivity extends AppCompatActivity implements View.OnClic
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-    public void openGameScreenActivity(String cards){
+
+    public void openGameScreenActivity(String cards) {
         Intent intent = new Intent(this, GameScreenActivity.class);
         intent.putExtra("extra_cardNumber", cards);
         startActivity(intent);

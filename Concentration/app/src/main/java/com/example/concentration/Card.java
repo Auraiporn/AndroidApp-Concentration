@@ -38,7 +38,7 @@ public class Card extends androidx.appcompat.widget.AppCompatButton {
         this.background = R.drawable.white;
         this.setBackgroundResource(background);
         this.setText(assignedWord);
-        this.setEnabled(false);
+        this.freeze();
     }
     public String limitFlip(){
         this.background = R.drawable.white;
